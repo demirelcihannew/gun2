@@ -1,0 +1,695 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>YDS Kelime Defteri</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Düzen: tek sütunlu sözlük kolonu; üstte yapışkan gün + mod şeridi, altta içerik */
+:root{
+  --paper:#f3f6f4; --surface:#ffffff; --surface-2:#eef2f0;
+  --ink:#132019; --muted:#5c6f67; --rule:#d9e2dd;
+  --accent:#0c6b57; --accent-soft:#e2f0ea; --on-accent:#ffffff;
+  --amber:#9a6a1f; --amber-soft:#f6eddc;
+  --ok:#2d7a52; --ok-soft:#e3f2e8;
+  --bad:#a63a2c; --bad-soft:#f8e7e3;
+  --display:"Newsreader",Georgia,"Times New Roman",serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0e1513; --surface:#161e1b; --surface-2:#1d2724;
+  --ink:#e6ede9; --muted:#9bada6; --rule:#2a3733;
+  --accent:#54c3a5; --accent-soft:#16302a; --on-accent:#07140f;
+  --amber:#d8a45c; --amber-soft:#2e2718;
+  --ok:#64c08c; --ok-soft:#16301f;
+  --bad:#e78a78; --bad-soft:#331c18;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0e1513; --surface:#161e1b; --surface-2:#1d2724;
+  --ink:#e6ede9; --muted:#9bada6; --rule:#2a3733;
+  --accent:#54c3a5; --accent-soft:#16302a; --on-accent:#07140f;
+  --amber:#d8a45c; --amber-soft:#2e2718;
+  --ok:#64c08c; --ok-soft:#16301f;
+  --bad:#e78a78; --bad-soft:#331c18;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:0 56px}
+
+/* ——— başlık ——— */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+.top-in{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:12px 0;display:flex;flex-direction:column;gap:10px}
+.brand{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-family:var(--display);font-size:1.45rem;font-weight:600;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.stat{font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.bar{height:3px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s ease}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{background:none;border:0;border-bottom:2px solid transparent;padding:8px 12px;color:var(--muted);white-space:nowrap;font-size:.86rem;font-weight:500}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.daypick{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding-bottom:10px}
+.chip{border:1px solid var(--rule);background:var(--surface);border-radius:99px;padding:3px 11px;font-size:.78rem;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+
+/* ——— ortak ——— */
+.sect{margin-top:22px}
+.lead{color:var(--muted);font-size:.84rem;margin:0 0 14px}
+.search{width:100%;border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:8px;padding:9px 12px;font:inherit;font-size:.9rem;margin-bottom:16px}
+.search::placeholder{color:var(--muted)}
+
+/* ——— öğren ——— */
+.entries{display:flex;flex-direction:column;gap:14px}
+.entry{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 16px 14px;min-width:0}
+.entry.known{border-left:3px solid var(--ok)}
+.entry.hard{border-left:3px solid var(--amber)}
+.hd{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.word{font-family:var(--display);font-size:1.5rem;font-weight:600;line-height:1.1;letter-spacing:-.015em}
+.ipa{font-family:var(--mono);font-size:.76rem;color:var(--muted);margin-top:2px}
+.pos{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:3px;padding:2px 6px;vertical-align:middle;margin-left:8px}
+.marks{display:flex;gap:6px}
+.mark{border:1px solid var(--rule);background:transparent;border-radius:6px;padding:4px 9px;font-size:.74rem;color:var(--muted)}
+.mark.on-ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.mark.on-hard{background:var(--amber-soft);border-color:var(--amber);color:var(--amber)}
+.tr{font-family:var(--display);font-size:1.02rem;margin:10px 0 0}
+.rowlbl{font-family:var(--mono);font-size:.64rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:14px 0 5px}
+.pills{display:flex;flex-wrap:wrap;gap:5px}
+.pill{font-size:.78rem;border:1px solid var(--rule);border-radius:99px;padding:2px 9px;background:var(--surface-2)}
+.pill.anti{border-style:dashed;color:var(--muted)}
+.ex{border-left:2px solid var(--rule);padding-left:12px;margin:0 0 10px}
+.ex:last-child{margin-bottom:0}
+.ex .en{font-size:.93rem}
+.ex .en b{color:var(--accent);font-weight:600}
+.ex .trn{font-size:.86rem;color:var(--muted);margin-top:2px}
+.tip{margin-top:12px;background:var(--amber-soft);border-radius:7px;padding:9px 11px;font-size:.83rem}
+.tip span{font-family:var(--mono);font-size:.64rem;letter-spacing:.09em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:3px}
+.fam{font-size:.84rem;color:var(--muted)}
+.fam i{font-style:normal;color:var(--ink);font-weight:500}
+
+/* ——— kartlar ——— */
+.cardbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.btn{border:1px solid var(--rule);background:var(--surface);border-radius:7px;padding:7px 13px;font-size:.84rem}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn:disabled{opacity:.4;cursor:default}
+.flip{perspective:1200px;margin-bottom:14px}
+.flip-in{position:relative;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,.1,.2,1);min-height:230px}
+.flip.open .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:8px;overflow:auto}
+.face.back{transform:rotateY(180deg)}
+.face .big{font-family:var(--display);font-size:1.9rem;font-weight:600;line-height:1.15;text-wrap:balance}
+.face .sub{font-size:.86rem;color:var(--muted)}
+.hintline{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.counter{font-family:var(--mono);font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ——— test ——— */
+.qcard{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px}
+.qkind{font-family:var(--mono);font-size:.64rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.qtext{font-family:var(--display);font-size:1.18rem;margin:8px 0 16px;text-wrap:balance}
+.qtext em{font-style:normal;color:var(--accent)}
+.blank{font-family:var(--mono);color:var(--accent)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;border:1px solid var(--rule);background:var(--surface-2);border-radius:8px;padding:10px 13px;font-size:.92rem;display:flex;gap:10px;align-items:flex-start}
+.opt .k{font-family:var(--mono);font-size:.74rem;color:var(--muted);padding-top:2px}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.right{background:var(--ok-soft);border-color:var(--ok)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.verdict{margin-top:14px;padding-top:13px;border-top:1px solid var(--rule);font-size:.88rem}
+.verdict .vhd{font-weight:600;margin-bottom:4px}
+.verdict .vhd.r{color:var(--ok)} .verdict .vhd.w{color:var(--bad)}
+.verdict .ctx{color:var(--muted);margin-top:6px}
+.scoreboard{text-align:center;background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:28px 18px}
+.scoreboard .n{font-family:var(--display);font-size:3rem;line-height:1;font-variant-numeric:tabular-nums}
+.wronglist{margin-top:18px;text-align:left;display:flex;flex-direction:column;gap:6px}
+.wrongrow{display:flex;justify-content:space-between;gap:10px;font-size:.88rem;border-bottom:1px dotted var(--rule);padding-bottom:5px}
+.wrongrow span{color:var(--muted)}
+.empty{text-align:center;color:var(--muted);padding:40px 16px;font-size:.9rem}
+footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--rule);color:var(--muted);font-size:.78rem}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <h1>YDS Kelime Defteri</h1>
+      <div class="stat" id="stat">—</div>
+    </div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="daypick" id="daypick"></div>
+    <div class="tabs" role="tablist" id="modes"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="view"></div>
+  <footer>
+    İlerleme bu tarayıcıda saklanır. Yeni kelime listesi verdiğinde yeni bir gün olarak eklenir.
+  </footer>
+</div>
+
+<script>
+const DATA=[{
+ id:1,label:"Gün 1",date:"8 Ekim 2026",
+ words:[
+ {w:"abundant",pos:"sıf.",ipa:"/əˈbʌndənt/",tr:["bol, bol miktarda bulunan","bereketli, zengin"],
+  syn:["plentiful","ample","copious","profuse"],ant:["scarce","scanty"],
+  fam:["abundance (i.) bolluk","abundantly (zf.) fazlasıyla"],
+  ex:[{en:"Evidence of climate change is {{abundant}} in the Arctic.",tr:"İklim değişikliğinin kanıtları Kuzey Kutbu'nda bol miktarda bulunuyor."},
+      {en:"The region is {{abundant}} in natural resources.",tr:"Bölge doğal kaynaklar bakımından zengindir."}],
+  tip:"“abundant in …” kalıbı “… bakımından zengin” demektir ve sınavda sık çıkar."},
+
+ {w:"acknowledge",pos:"f.",ipa:"/əkˈnɒlɪdʒ/",tr:["kabul etmek, doğruluğunu teslim etmek","(alındığını) bildirmek"],
+  syn:["admit","concede","recognize"],ant:["deny","dismiss"],
+  fam:["acknowledgement (i.) kabul; teşekkür"],
+  ex:[{en:"The company finally {{acknowledged}} the fault in its design.",tr:"Şirket sonunda tasarımındaki kusuru kabul etti."},
+      {en:"She is widely {{acknowledged}} as the leading expert in the field.",tr:"Alanın önde gelen uzmanı olarak geniş çapta kabul görüyor."}],
+  tip:"admit gibi “isteksizce kabul etmek” tonu taşır. “acknowledge sb as sth” kalıbına dikkat."},
+
+ {w:"adverse",pos:"sıf.",ipa:"/ˈædvɜːs/",tr:["olumsuz, ters","zararlı, elverişsiz"],
+  syn:["unfavourable","detrimental","harmful"],ant:["favourable","beneficial"],
+  fam:["adversity (i.) sıkıntı, zorluk","adversely (zf.) olumsuz biçimde"],
+  ex:[{en:"The drug may have {{adverse}} effects on the liver.",tr:"İlacın karaciğer üzerinde olumsuz etkileri olabilir."},
+      {en:"Crops failed because of {{adverse}} weather conditions.",tr:"Ürünler olumsuz hava koşulları yüzünden telef oldu."}],
+  tip:"adverse (olumsuz) ile averse (isteksiz) karıştırılır: “be averse to sth” = -e karşı isteksiz olmak."},
+
+ {w:"alleviate",pos:"f.",ipa:"/əˈliːvieɪt/",tr:["hafifletmek, azaltmak (acı, sıkıntı)"],
+  syn:["relieve","ease","mitigate","lessen"],ant:["aggravate","worsen","intensify"],
+  fam:["alleviation (i.) hafifletme"],
+  ex:[{en:"The new policy aims to {{alleviate}} poverty in rural areas.",tr:"Yeni politika kırsal bölgelerdeki yoksulluğu hafifletmeyi amaçlıyor."},
+      {en:"Nothing could {{alleviate}} his anxiety before the exam.",tr:"Sınav öncesindeki kaygısını hiçbir şey hafifletemedi."}],
+  tip:"Nesnesi hep olumsuz bir şeydir: pain, poverty, stress, suffering, symptoms."},
+
+ {w:"ambiguous",pos:"sıf.",ipa:"/æmˈbɪɡjuəs/",tr:["belirsiz, muğlak","birden çok anlama gelebilen"],
+  syn:["vague","equivocal","unclear","obscure"],ant:["clear","explicit","unambiguous"],
+  fam:["ambiguity (i.) belirsizlik"],
+  ex:[{en:"His answer was deliberately {{ambiguous}}.",tr:"Cevabı kasıtlı olarak muğlaktı."},
+      {en:"The wording of the contract is {{ambiguous}} and open to debate.",tr:"Sözleşmenin ifadesi muğlak ve tartışmaya açık."}],
+  tip:"ambiguous = birden fazla anlama gelebilen; vague = yeterince ayrıntı içermeyen. Aynı şey değiller."},
+
+ {w:"anticipate",pos:"f.",ipa:"/ænˈtɪsɪpeɪt/",tr:["öngörmek, beklemek","önceden tedbir almak"],
+  syn:["expect","foresee","predict"],ant:[],
+  fam:["anticipation (i.) beklenti","anticipated (sıf.) beklenen"],
+  ex:[{en:"Analysts {{anticipate}} a sharp rise in energy prices.",tr:"Analistler enerji fiyatlarında keskin bir artış öngörüyor."},
+      {en:"We had not {{anticipated}} such a strong reaction.",tr:"Bu kadar güçlü bir tepki beklememiştik."}],
+  tip:"Fiil alırken -ing ister: anticipate receiving (anticipate to receive YANLIŞ)."},
+
+ {w:"apparent",pos:"sıf.",ipa:"/əˈpærənt/",tr:["açık, besbelli","görünüşteki (aslında öyle olmayabilir)"],
+  syn:["evident","obvious","seeming","ostensible"],ant:["obscure","hidden"],
+  fam:["apparently (zf.) görünüşe göre, anlaşılan"],
+  ex:[{en:"It soon became {{apparent}} that the plan would fail.",tr:"Planın başarısız olacağı kısa sürede ortaya çıktı."},
+      {en:"Despite his {{apparent}} calm, he was furious.",tr:"Görünürdeki sakinliğine rağmen çok öfkeliydi."}],
+  tip:"Neredeyse zıt iki anlamı var: “besbelli” ve “görünürde”. Hangisi olduğunu cümle belirler."},
+
+ {w:"arbitrary",pos:"sıf.",ipa:"/ˈɑːbɪtrəri/",tr:["keyfi, nedensiz","rastgele seçilmiş"],
+  syn:["random","capricious","discretionary"],ant:["reasoned","systematic","principled"],
+  fam:["arbitrarily (zf.) keyfi olarak","arbitrariness (i.) keyfilik"],
+  ex:[{en:"The decision seemed completely {{arbitrary}} to the staff.",tr:"Karar çalışanlara tamamen keyfi göründü."},
+      {en:"Borders drawn by colonial powers were often {{arbitrary}}.",tr:"Sömürgeci güçlerin çizdiği sınırlar çoğu zaman keyfiydi."}],
+  tip:"Otorite eleştirisi içeren akademik metinlerde sık geçer: arbitrary power / rule / decision."},
+
+ {w:"assess",pos:"f.",ipa:"/əˈses/",tr:["değerlendirmek, ölçmek","(değer, vergi) biçmek"],
+  syn:["evaluate","appraise","gauge"],ant:[],
+  fam:["assessment (i.) değerlendirme","assessor (i.) değerlendirici"],
+  ex:[{en:"Researchers {{assessed}} the impact of the reform on small firms.",tr:"Araştırmacılar reformun küçük şirketler üzerindeki etkisini değerlendirdi."},
+      {en:"It is difficult to {{assess}} the damage at this stage.",tr:"Bu aşamada hasarı değerlendirmek zor."}],
+  tip:"Akademik metinde evaluate ile neredeyse eşdeğerdir; ikisi de doğru şık olabilir, cümleye bak."},
+
+ {w:"attribute",pos:"f./i.",ipa:"/əˈtrɪbjuːt/ (f.) · /ˈætrɪbjuːt/ (i.)",tr:["(f.) atfetmek, -e bağlamak","(i.) özellik, nitelik"],
+  syn:["ascribe","credit","quality","trait"],ant:[],
+  fam:["attribution (i.) atıf","attributable (sıf.) -e bağlanabilir"],
+  ex:[{en:"She {{attributes}} her success to hard work rather than luck.",tr:"Başarısını şansa değil, sıkı çalışmaya bağlıyor."},
+      {en:"Patience is an essential {{attribute}} of a good teacher.",tr:"Sabır, iyi bir öğretmenin temel niteliğidir."}],
+  tip:"Kalıp: attribute A to B. Vurgu anlamı belirler: fiilde 2., isimde 1. hecede."},
+
+ {w:"compelling",pos:"sıf.",ipa:"/kəmˈpelɪŋ/",tr:["ikna edici, karşı konulamaz","sürükleyici, ilgi çekici"],
+  syn:["persuasive","convincing","cogent","gripping"],ant:["unconvincing","weak"],
+  fam:["compel (f.) zorlamak","compulsion (i.) zorlama","compulsory (sıf.) zorunlu"],
+  ex:[{en:"There is {{compelling}} evidence that the treatment works.",tr:"Tedavinin işe yaradığına dair ikna edici kanıtlar var."},
+      {en:"The documentary tells a {{compelling}} story of survival.",tr:"Belgesel, sürükleyici bir hayatta kalma hikâyesi anlatıyor."}],
+  tip:"Eşdizimleri ezberle: compelling evidence / reason / argument / case."},
+
+ {w:"comprehensive",pos:"sıf.",ipa:"/ˌkɒmprɪˈhensɪv/",tr:["kapsamlı, her yönü içeren"],
+  syn:["thorough","exhaustive","extensive","all-inclusive"],ant:["partial","superficial","narrow"],
+  fam:["comprehensively (zf.) kapsamlı biçimde"],
+  ex:[{en:"The report offers a {{comprehensive}} analysis of the crisis.",tr:"Rapor, krizin kapsamlı bir analizini sunuyor."},
+      {en:"Students need a {{comprehensive}} understanding of the topic.",tr:"Öğrencilerin konuyu kapsamlı biçimde anlaması gerekiyor."}],
+  tip:"Klasik YDS tuzağı: comprehensive (kapsamlı) ≠ comprehensible (anlaşılır)."},
+
+ {w:"conceive",pos:"f.",ipa:"/kənˈsiːv/",tr:["tasarlamak, aklına getirmek","kavramak, tahayyül etmek"],
+  syn:["devise","formulate","envisage","imagine"],ant:[],
+  fam:["concept (i.) kavram","conception (i.) tasarı, kavrayış","conceivable (sıf.) akla yatkın"],
+  ex:[{en:"The project was first {{conceived}} in the 1990s.",tr:"Proje ilk olarak 1990'larda tasarlandı."},
+      {en:"I cannot {{conceive}} of a world without books.",tr:"Kitapsız bir dünyayı aklım almıyor."}],
+  tip:"“conceive of sth” = bir şeyi düşünebilmek. Edatsız hâli “tasarlamak” anlamındadır."},
+
+ {w:"deteriorate",pos:"f.",ipa:"/dɪˈtɪəriəreɪt/",tr:["kötüleşmek, bozulmak"],
+  syn:["worsen","decline","degenerate"],ant:["improve","recover","ameliorate"],
+  fam:["deterioration (i.) kötüleşme"],
+  ex:[{en:"Her health {{deteriorated}} rapidly after the surgery.",tr:"Ameliyattan sonra sağlığı hızla kötüleşti."},
+      {en:"Relations between the two countries have {{deteriorated}} since the incident.",tr:"İki ülke arasındaki ilişkiler olaydan beri kötüleşti."}],
+  tip:"Geçişsizdir, nesne almaz. “deteriorate the situation” yanlış; orada worsen kullanılır."},
+
+ {w:"diminish",pos:"f.",ipa:"/dɪˈmɪnɪʃ/",tr:["azalmak; azaltmak","küçümsemek, değerini düşürmek"],
+  syn:["decrease","reduce","dwindle","wane"],ant:["increase","augment","expand"],
+  fam:["diminishing (sıf.) azalan","diminution (i.) azalma"],
+  ex:[{en:"Interest in the subject has {{diminished}} over the past decade.",tr:"Konuya olan ilgi son on yılda azaldı."},
+      {en:"Nothing can {{diminish}} the value of her contribution.",tr:"Hiçbir şey onun katkısının değerini azaltamaz."}],
+  tip:"Ekonomi metinlerinin klasiği: “diminishing returns” = azalan verim."},
+
+ {w:"elaborate",pos:"sıf./f.",ipa:"/ɪˈlæbərət/ (sıf.) · /ɪˈlæbəreɪt/ (f.)",tr:["(sıf.) ayrıntılı, özenle hazırlanmış","(f.) ayrıntılandırmak, açmak"],
+  syn:["detailed","intricate","expand on"],ant:["simple","plain"],
+  fam:["elaboration (i.) ayrıntılandırma","elaborately (zf.) özenle"],
+  ex:[{en:"They had prepared an {{elaborate}} plan for the ceremony.",tr:"Tören için ayrıntılı bir plan hazırlamışlardı."},
+      {en:"Could you {{elaborate}} on your last point?",tr:"Son söylediğiniz noktayı biraz açar mısınız?"}],
+  tip:"Fiil hâli edatla gelir: elaborate ON something."},
+
+ {w:"feasible",pos:"sıf.",ipa:"/ˈfiːzəbl/",tr:["yapılabilir, uygulanabilir"],
+  syn:["viable","practicable","workable","achievable"],ant:["impractical","unworkable"],
+  fam:["feasibility (i.) yapılabilirlik — feasibility study = fizibilite çalışması"],
+  ex:[{en:"Building a tunnel here is technically {{feasible}} but very costly.",tr:"Buraya tünel inşa etmek teknik olarak uygulanabilir ama çok maliyetli."},
+      {en:"We need to find a {{feasible}} solution within the budget.",tr:"Bütçe dâhilinde uygulanabilir bir çözüm bulmalıyız."}],
+  tip:"Üçlüyü ayır: feasible = yapılabilir, plausible = inandırıcı, probable = muhtemel."},
+
+ {w:"inevitable",pos:"sıf.",ipa:"/ɪnˈevɪtəbl/",tr:["kaçınılmaz, önlenemez"],
+  syn:["unavoidable","inescapable","certain"],ant:["avoidable","preventable"],
+  fam:["inevitably (zf.) kaçınılmaz olarak","inevitability (i.) kaçınılmazlık"],
+  ex:[{en:"Conflict was {{inevitable}} once the talks collapsed.",tr:"Görüşmeler çökünce çatışma kaçınılmazdı."},
+      {en:"Ageing brings with it an {{inevitable}} loss of muscle mass.",tr:"Yaşlanma, beraberinde kaçınılmaz bir kas kaybı getirir."}],
+  tip:"Kalıp: “It was inevitable that …”. Zarf hâli inevitably, bağlaç sorularında sık çıkar."},
+
+ {w:"prevalent",pos:"sıf.",ipa:"/ˈprevələnt/",tr:["yaygın, hâkim","egemen olan"],
+  syn:["widespread","common","rife","pervasive"],ant:["rare","uncommon","scarce"],
+  fam:["prevalence (i.) yaygınlık","prevail (f.) hüküm sürmek; galip gelmek"],
+  ex:[{en:"The disease is more {{prevalent}} among older adults.",tr:"Hastalık yaşlı yetişkinler arasında daha yaygın."},
+      {en:"Such beliefs were {{prevalent}} in nineteenth-century Europe.",tr:"Bu tür inanışlar 19. yüzyıl Avrupası'nda yaygındı."}],
+  tip:"Edatları: prevalent among / in. Sağlık metinlerinde “prevalence rate” sık geçer."},
+
+ {w:"scrutinize",pos:"f.",ipa:"/ˈskruːtɪnaɪz/",tr:["dikkatle incelemek, didik didik etmek"],
+  syn:["examine","inspect","pore over"],ant:["skim","glance at"],
+  fam:["scrutiny (i.) dikkatli inceleme — under scrutiny = mercek altında"],
+  ex:[{en:"Auditors {{scrutinized}} every line of the accounts.",tr:"Denetçiler hesapların her satırını dikkatle inceledi."},
+      {en:"Her private life has been closely {{scrutinized}} by the press.",tr:"Özel hayatı basın tarafından yakından mercek altına alındı."}],
+  tip:"İsim hâli daha sık çıkar: “come under scrutiny” = mercek altına girmek."}
+]},
+{
+ id:2,label:"Gün 2",date:"10 Ekim 2026",
+ words:[
+ {w:"inquiry",pos:"i.",ipa:"/ɪnˈkwaɪəri/",tr:["soruşturma, resmî araştırma","soru, sorgu"],
+  syn:["investigation","probe","query","inquest"],ant:[],
+  fam:["inquire (f.) sormak, araştırmak","inquisitive (sıf.) meraklı"],
+  ex:[{en:"The government launched an official {{inquiry}} into the accident.",tr:"Hükûmet kaza hakkında resmî bir soruşturma başlattı."},
+      {en:"We received several {{inquiries}} about the new programme.",tr:"Yeni program hakkında birkaç soru aldık."}],
+  tip:"Edatı into: an inquiry INTO something. İngiliz yazımı enquiry, Amerikan yazımı inquiry."},
+
+ {w:"conflict",pos:"i./f.",ipa:"/ˈkɒnflɪkt/ (i.) · /kənˈflɪkt/ (f.)",tr:["(i.) çatışma, anlaşmazlık, uyuşmazlık","(f.) çelişmek, uyuşmamak"],
+  syn:["dispute","clash","discord","contradict"],ant:["harmony","agreement","accord"],
+  fam:["conflicting (sıf.) çelişen","conflicted (sıf.) içi çelişkide olan"],
+  ex:[{en:"The two studies reached {{conflicting}} conclusions.",tr:"İki çalışma çelişen sonuçlara ulaştı."},
+      {en:"His account {{conflicts}} with the evidence presented in court.",tr:"Anlattıkları, mahkemede sunulan kanıtlarla çelişiyor."}],
+  tip:"Fiil hâli edatla gelir: conflict WITH. Kalıp: a conflict of interest = çıkar çatışması."},
+
+ {w:"implication",pos:"i.",ipa:"/ˌɪmplɪˈkeɪʃn/",tr:["sonuç, doğurabileceği etki (çoğul)","ima, üstü kapalı anlam"],
+  syn:["consequence","ramification","inference","insinuation"],ant:[],
+  fam:["imply (f.) ima etmek; gerektirmek","implicit (sıf.) üstü kapalı"],
+  ex:[{en:"The findings have serious {{implications}} for public health policy.",tr:"Bulgular, halk sağlığı politikası açısından ciddi sonuçlar doğuruyor."},
+      {en:"She resented the {{implication}} that she had been careless.",tr:"Dikkatsiz davrandığı imasına içerledi."}],
+  tip:"Çoğul hâli “olası sonuçlar”, tekil hâli genelde “ima” demektir. Edatı: implications FOR."},
+
+ {w:"drawback",pos:"i.",ipa:"/ˈdrɔːbæk/",tr:["sakınca, dezavantaj, olumsuz yan"],
+  syn:["disadvantage","downside","shortcoming","snag"],ant:["advantage","benefit","merit"],
+  fam:[],
+  ex:[{en:"The main {{drawback}} of the method is its cost.",tr:"Yöntemin başlıca sakıncası maliyetidir."},
+      {en:"Every solution has its own {{drawbacks}}.",tr:"Her çözümün kendine göre sakıncaları var."}],
+  tip:"Karşılaştırma paragraflarının anahtar kelimesi: advantages and drawbacks."},
+
+ {w:"convenience",pos:"i.",ipa:"/kənˈviːniəns/",tr:["kolaylık, rahatlık","elverişlilik, uygunluk"],
+  syn:["ease","comfort","accessibility"],ant:["inconvenience","hassle"],
+  fam:["convenient (sıf.) elverişli, uygun","conveniently (zf.) kolayca"],
+  ex:[{en:"Online banking offers great {{convenience}} to customers.",tr:"İnternet bankacılığı müşterilere büyük kolaylık sağlıyor."},
+      {en:"Please reply at your earliest {{convenience}}.",tr:"Lütfen size en uygun olan en kısa zamanda yanıt verin."}],
+  tip:"Sıfatı kişiye değil duruma uygundur: a convenient time (kişi için “available” kullanılır)."},
+
+ {w:"transmit",pos:"f.",ipa:"/trænzˈmɪt/",tr:["iletmek, aktarmak","(hastalık) bulaştırmak","(yayın) yapmak"],
+  syn:["convey","relay","pass on","broadcast"],ant:[],
+  fam:["transmission (i.) iletim; bulaşma","transmitter (i.) verici"],
+  ex:[{en:"The virus is {{transmitted}} through contaminated water.",tr:"Virüs kirli su yoluyla bulaşıyor."},
+      {en:"Satellites {{transmit}} data back to Earth within seconds.",tr:"Uydular verileri saniyeler içinde Dünya'ya iletir."}],
+  tip:"Çift t ile çekilir: transmitted, transmitting. Edatları: transmit sth TO sb, transmit THROUGH/BY."},
+
+ {w:"delicate",pos:"sıf.",ipa:"/ˈdelɪkət/",tr:["hassas, nazik (durum)","narin, kolay kırılan","ince, zarif"],
+  syn:["fragile","sensitive","subtle","tricky"],ant:["robust","sturdy","coarse"],
+  fam:["delicacy (i.) incelik; nezaket","delicately (zf.) nazikçe"],
+  ex:[{en:"Negotiations are at a {{delicate}} stage.",tr:"Görüşmeler hassas bir aşamada."},
+      {en:"The vase is {{delicate}}, so handle it with care.",tr:"Vazo narin, dolayısıyla dikkatli tut."}],
+  tip:"Hem “kırılgan” hem “dikkat gerektiren” demektir: a delicate balance / matter / situation."},
+
+ {w:"excessive",pos:"sıf.",ipa:"/ɪkˈsesɪv/",tr:["aşırı, gereğinden fazla"],
+  syn:["immoderate","inordinate","undue","exorbitant"],ant:["moderate","modest","restrained"],
+  fam:["excess (i.) aşırılık, fazlalık","exceed (f.) aşmak","excessively (zf.) aşırı ölçüde"],
+  ex:[{en:"{{Excessive}} use of antibiotics has led to resistant bacteria.",tr:"Antibiyotiklerin aşırı kullanımı dirençli bakterilere yol açtı."},
+      {en:"The court found the penalty {{excessive}}.",tr:"Mahkeme cezayı aşırı buldu."}],
+  tip:"Hep olumsuz bir yargı taşır. Kalıp: in excess of = -den fazla."},
+
+ {w:"vigorous",pos:"sıf.",ipa:"/ˈvɪɡərəs/",tr:["güçlü, enerjik, dinamik","şiddetli, hararetli"],
+  syn:["energetic","robust","strenuous","forceful"],ant:["feeble","sluggish","lethargic"],
+  fam:["vigour (i.) güç, canlılık","vigorously (zf.) şiddetle, hararetle"],
+  ex:[{en:"The proposal met with {{vigorous}} opposition from farmers.",tr:"Öneri, çiftçilerin güçlü muhalefetiyle karşılaştı."},
+      {en:"Thirty minutes of {{vigorous}} exercise a day is recommended.",tr:"Günde otuz dakika yoğun egzersiz öneriliyor."}],
+  tip:"Eşdizimleri: vigorous exercise / debate / defence / growth."},
+
+ {w:"swift",pos:"sıf.",ipa:"/swɪft/",tr:["hızlı, çabuk","ivedi, gecikmeden yapılan"],
+  syn:["rapid","prompt","speedy","expeditious"],ant:["slow","sluggish","leisurely"],
+  fam:["swiftly (zf.) hızla, derhâl","swiftness (i.) hız"],
+  ex:[{en:"The government came under pressure to take {{swift}} action.",tr:"Hükûmet hızlı adım atma baskısı altına girdi."},
+      {en:"Her recovery was surprisingly {{swift}}.",tr:"İyileşmesi şaşırtıcı biçimde hızlı oldu."}],
+  tip:"fast nesnenin hızını, swift tepkinin gecikmesizliğini anlatır: a swift response."},
+
+ {w:"convincing",pos:"sıf.",ipa:"/kənˈvɪnsɪŋ/",tr:["ikna edici, inandırıcı"],
+  syn:["persuasive","compelling","cogent","credible"],ant:["unconvincing","implausible","feeble"],
+  fam:["convince (f.) ikna etmek","conviction (i.) inanç; mahkûmiyet"],
+  ex:[{en:"He gave no {{convincing}} explanation for his absence.",tr:"Yokluğu için ikna edici bir açıklama yapmadı."},
+      {en:"The theory is elegant but not entirely {{convincing}}.",tr:"Kuram zarif ama tümüyle inandırıcı değil."}],
+  tip:"Gün 1'deki compelling ile neredeyse eşdeğer; ikisi birlikte şık olarak çıkarsa cümleye bak."},
+
+ {w:"drastic",pos:"sıf.",ipa:"/ˈdræstɪk/",tr:["köklü, radikal","sert, çarpıcı (önlem, değişim)"],
+  syn:["radical","extreme","sweeping","severe"],ant:["mild","moderate","gradual"],
+  fam:["drastically (zf.) köklü biçimde, çarpıcı ölçüde"],
+  ex:[{en:"{{Drastic}} measures were needed to stop the outbreak.",tr:"Salgını durdurmak için köklü önlemler gerekiyordu."},
+      {en:"Prices have fallen {{drastically}} since January.",tr:"Fiyatlar ocak ayından beri çarpıcı biçimde düştü."}],
+  tip:"Eşdizimleri: drastic measures / cuts / changes. Zarf hâli sayı ve oranlarla kullanılır."},
+
+ {w:"hinder",pos:"f.",ipa:"/ˈhɪndə/",tr:["engellemek, zorlaştırmak, geciktirmek"],
+  syn:["impede","hamper","obstruct","inhibit"],ant:["facilitate","assist","promote"],
+  fam:["hindrance (i.) engel, ayak bağı"],
+  ex:[{en:"Heavy rain {{hindered}} the rescue operation.",tr:"Şiddetli yağış kurtarma operasyonunu zorlaştırdı."},
+      {en:"Lack of funding has {{hindered}} progress on the project.",tr:"Fon eksikliği projedeki ilerlemeyi engelledi."}],
+  tip:"prevent tamamen durdurur, hinder yavaşlatır. İkisi şık olarak birlikte çıkar."},
+
+ {w:"suspend",pos:"f.",ipa:"/səˈspend/",tr:["askıya almak, geçici olarak durdurmak","(görevden) uzaklaştırmak","asmak, havada tutmak"],
+  syn:["halt","postpone","defer","adjourn"],ant:["resume","continue","reinstate"],
+  fam:["suspension (i.) askıya alma; uzaklaştırma","suspended (sıf.) askıda"],
+  ex:[{en:"Flights were {{suspended}} because of the storm.",tr:"Uçuşlar fırtına nedeniyle askıya alındı."},
+      {en:"Two players were {{suspended}} for three matches.",tr:"İki oyuncu üç maç boyunca men edildi."}],
+  tip:"Geçici durdurmadır; kalıcı bitirme cancel ile anlatılır. “a suspended sentence” = ertelenmiş ceza."},
+
+ {w:"encompass",pos:"f.",ipa:"/ɪnˈkʌmpəs/",tr:["kapsamak, içermek","çevrelemek"],
+  syn:["include","cover","embrace","comprise"],ant:["exclude","omit"],
+  fam:["encompassing (sıf.) kapsayıcı — all-encompassing = her şeyi kapsayan"],
+  ex:[{en:"The term {{encompasses}} a wide range of disorders.",tr:"Terim geniş bir hastalık yelpazesini kapsıyor."},
+      {en:"The park {{encompasses}} nearly two thousand hectares.",tr:"Park yaklaşık iki bin hektarı kapsıyor."}],
+  tip:"Edat almaz: encompass something (encompass of/in YANLIŞ). Gün 1'deki comprehensive ile aynı kökten gelmez ama aynı fikri taşır."},
+
+ {w:"distract",pos:"f.",ipa:"/dɪˈstrækt/",tr:["dikkatini dağıtmak, başka yöne çekmek"],
+  syn:["divert","sidetrack","unsettle"],ant:["focus","concentrate"],
+  fam:["distraction (i.) dikkat dağıtıcı şey","distracted (sıf.) dalgın","distracting (sıf.) dikkat dağıtan"],
+  ex:[{en:"Notifications constantly {{distract}} students from their work.",tr:"Bildirimler öğrencilerin dikkatini sürekli işlerinden başka yöne çekiyor."},
+      {en:"He was too {{distracted}} to notice the mistake.",tr:"Hatayı fark edemeyecek kadar dalgındı."}],
+  tip:"Kalıp: distract sb FROM sth. -ed hâli kişiyi, -ing hâli nesneyi niteler."},
+
+ {w:"make up for",pos:"f. (öbek)",ipa:"/ˌmeɪk ˈʌp fɔː/",tr:["telafi etmek, gidermek","(eksiği) kapatmak"],
+  syn:["compensate for","offset","atone for"],ant:[],
+  fam:["make up (f.) uydurmak; oluşturmak; barışmak"],
+  ex:[{en:"Nothing can {{make up for}} the years she lost.",tr:"Hiçbir şey kaybettiği yılları telafi edemez."},
+      {en:"He worked weekends to {{make up for}} the delay.",tr:"Gecikmeyi telafi etmek için hafta sonları çalıştı."}],
+  tip:"Tek fiilli karşılığı compensate for; ikisi şıklarda birlikte çıkabilir. make up tek başına “uydurmak” demektir."},
+
+ {w:"look up to",pos:"f. (öbek)",ipa:"/ˌlʊk ˈʌp tuː/",tr:["saygı duymak, hayranlık duymak","örnek almak"],
+  syn:["admire","respect","revere"],ant:["look down on","despise"],
+  fam:["look down on (f.) küçümsemek","look into (f.) araştırmak"],
+  ex:[{en:"Younger players {{look up to}} him as a role model.",tr:"Genç oyuncular onu bir rol modeli olarak örnek alıyor."},
+      {en:"She has always {{looked up to}} her grandmother.",tr:"Her zaman büyükannesine hayranlık duymuştur."}],
+  tip:"Zıttı look down on. Öbek fiil sorularında bu ikili birlikte sorulur."},
+
+ {w:"consume",pos:"f.",ipa:"/kənˈsjuːm/",tr:["tüketmek, harcamak","yiyip içmek","(ateş) yakıp yok etmek"],
+  syn:["use up","expend","devour","deplete"],ant:["conserve","save"],
+  fam:["consumption (i.) tüketim","consumer (i.) tüketici","consuming (sıf.) tüketen, her şeyi kaplayan"],
+  ex:[{en:"Data centres {{consume}} enormous amounts of electricity.",tr:"Veri merkezleri muazzam miktarda elektrik tüketiyor."},
+      {en:"Adults should {{consume}} less salt than they currently do.",tr:"Yetişkinler şu anda tükettiklerinden daha az tuz tüketmeli."}],
+  tip:"İsim hâli metinlerde daha sık: energy/water consumption. “time-consuming” = zaman alan."},
+
+ {w:"prone",pos:"sıf.",ipa:"/prəʊn/",tr:["yatkın, eğilimli (genelde olumsuz)","meyilli"],
+  syn:["susceptible","liable","inclined","apt"],ant:["resistant","immune"],
+  fam:["proneness (i.) yatkınlık — accident-prone = kaza yapmaya yatkın"],
+  ex:[{en:"Older buildings are more {{prone}} to earthquake damage.",tr:"Eski binalar deprem hasarına daha yatkın."},
+      {en:"He is {{prone}} to exaggerate when he tells a story.",tr:"Hikâye anlatırken abartmaya eğilimlidir."}],
+  tip:"Kalıp: prone TO sth veya prone TO DO sth. Sonucu hep istenmeyen bir şeydir."},
+
+ {w:"significantly",pos:"zf.",ipa:"/sɪɡˈnɪfɪkəntli/",tr:["önemli ölçüde, belirgin biçimde","anlamlı biçimde (istatistik)"],
+  syn:["considerably","substantially","markedly","appreciably"],ant:["slightly","marginally","negligibly"],
+  fam:["significant (sıf.) önemli, anlamlı","significance (i.) önem, anlam"],
+  ex:[{en:"Costs rose {{significantly}} after the new regulation.",tr:"Maliyetler yeni düzenlemeden sonra önemli ölçüde arttı."},
+      {en:"The two groups did not differ {{significantly}} in performance.",tr:"İki grup performans açısından anlamlı biçimde farklılaşmadı."}],
+  tip:"Akademik metinde “statistically significant” kalıbı istatistiksel anlamlılık demektir, “çok önemli” değil."},
+
+ {w:"burden",pos:"i./f.",ipa:"/ˈbɜːdn/",tr:["(i.) yük, sıkıntı, külfet","(f.) yüklemek, sırtına yıkmak"],
+  syn:["load","onus","strain","encumber"],ant:["relief","ease"],
+  fam:["burdensome (sıf.) külfetli","unburden (f.) yükünü hafifletmek"],
+  ex:[{en:"Chronic illness places a heavy {{burden}} on families.",tr:"Kronik hastalık ailelerin üzerine ağır bir yük bindirir."},
+      {en:"Small firms are {{burdened}} with excessive paperwork.",tr:"Küçük şirketler aşırı evrak işiyle yükleniyor."}],
+  tip:"Eşdizimleri: a heavy/financial burden, place a burden ON sb, the burden of proof = ispat yükü."},
+
+ {w:"confine",pos:"f.",ipa:"/kənˈfaɪn/",tr:["sınırlamak, kısıtlamak","kapatmak, hapsetmek"],
+  syn:["restrict","limit","imprison","constrain"],ant:["release","free","broaden"],
+  fam:["confined (sıf.) kapalı, sınırlı — confined space","confinement (i.) kapatılma"],
+  ex:[{en:"Please {{confine}} your answer to the question asked.",tr:"Lütfen cevabınızı sorulan soruyla sınırlayın."},
+      {en:"The outbreak was {{confined}} to a single village.",tr:"Salgın tek bir köyle sınırlı kaldı."}],
+  tip:"Kalıp: confine sth TO sth. Edilgen hâli “-e sınırlı kalmak” diye çevrilir ve sık çıkar."},
+
+ {w:"uncover",pos:"f.",ipa:"/ʌnˈkʌvə/",tr:["ortaya çıkarmak, açığa çıkarmak (gizli olanı)","örtüsünü açmak"],
+  syn:["reveal","expose","unearth","disclose"],ant:["conceal","cover up","hide"],
+  fam:["uncovering (i.) ortaya çıkarma","discover (f.) keşfetmek"],
+  ex:[{en:"Journalists {{uncovered}} evidence of widespread fraud.",tr:"Gazeteciler yaygın bir yolsuzluğun kanıtlarını ortaya çıkardı."},
+      {en:"Excavations have {{uncovered}} a Roman bath house.",tr:"Kazılar bir Roma hamamını açığa çıkardı."}],
+  tip:"discover yeni bir şeyi bulmak, uncover saklanan bir şeyi açığa çıkarmaktır."},
+
+ {w:"vague",pos:"sıf.",ipa:"/veɪɡ/",tr:["belirsiz, muğlak, üstünkörü","silik, bulanık"],
+  syn:["imprecise","indistinct","hazy","nebulous"],ant:["precise","specific","definite"],
+  fam:["vaguely (zf.) belli belirsiz","vagueness (i.) belirsizlik"],
+  ex:[{en:"He gave only a {{vague}} description of the suspect.",tr:"Şüpheliyle ilgili yalnızca belirsiz bir tasvir verdi."},
+      {en:"I have a {{vague}} memory of visiting the place as a child.",tr:"Orayı çocukken ziyaret ettiğime dair belli belirsiz bir anım var."}],
+  tip:"Gün 1'deki ambiguous ile ayrımı: vague = yeterince ayrıntı yok, ambiguous = birden fazla anlama geliyor."},
+
+ {w:"partial",pos:"sıf.",ipa:"/ˈpɑːʃl/",tr:["kısmi, bir bölümü kapsayan","taraflı, yan tutan"],
+  syn:["incomplete","fragmentary","biased","prejudiced"],ant:["complete","total","impartial"],
+  fam:["partially (zf.) kısmen","partiality (i.) taraf tutma","impartial (sıf.) tarafsız"],
+  ex:[{en:"The treatment brought only {{partial}} relief.",tr:"Tedavi yalnızca kısmi bir rahatlama sağladı."},
+      {en:"A judge must never be {{partial}} to one side.",tr:"Bir yargıç asla bir tarafa taraflı olmamalı."}],
+  tip:"İki anlamı var ve edat ayırt eder: partial TO sth = -e düşkün/taraflı. Zıttı impartial = tarafsız."}
+]}];
+
+const MODES=[{id:"ogren",t:"Öğren"},{id:"kart",t:"Kartlar"},{id:"test",t:"Test"},{id:"zor",t:"Zorlandıklarım"}];
+const KEY="yds-kelime-defteri-v1";
+let prog={};
+try{prog=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){prog={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(prog))}catch(e){}}
+
+let mode="ogren", dayId=DATA[DATA.length-1].id, query="";
+const ALL=DATA.flatMap(d=>d.words);
+const day=()=>DATA.find(d=>d.id===dayId)||DATA[0];
+const scope=()=>mode==="zor"?ALL.filter(w=>prog[w.w]==="hard"):day().words;
+
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const plain=s=>s.replace(/\{\{(.+?)\}\}/g,"$1");
+const bold=s=>esc(s).replace(/\{\{(.+?)\}\}/g,"<b>$1</b>");
+const target=s=>(s.match(/\{\{(.+?)\}\}/)||[,""])[1];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=(a,n)=>shuffle(a).slice(0,n);
+
+/* ——— iskelet ——— */
+function chrome(){
+  document.getElementById("daypick").innerHTML=DATA.map(d=>
+    `<button class="chip" data-day="${d.id}" aria-pressed="${d.id===dayId}">${esc(d.label)}</button>`).join("")+
+    `<span class="chip" style="border-style:dashed">${esc(day().date)}</span>`;
+  document.getElementById("modes").innerHTML=MODES.map(m=>
+    `<button class="tab" role="tab" data-mode="${m.id}" aria-selected="${m.id===mode}">${m.t}</button>`).join("");
+  const ws=day().words, known=ws.filter(w=>prog[w.w]==="known").length;
+  const hard=ALL.filter(w=>prog[w.w]==="hard").length;
+  document.getElementById("stat").textContent=`${ws.length} kelime · ${known} öğrenildi · ${hard} zor`;
+  document.getElementById("bar").style.width=ws.length?(known/ws.length*100)+"%":"0";
+}
+
+/* ——— öğren ——— */
+function viewOgren(){
+  const list=scope().filter(w=>!query||w.w.includes(query)||w.tr.join(" ").toLowerCase().includes(query));
+  if(!scope().length) return `<div class="empty">Burada henüz kelime yok. Zor olarak işaretlediğin kelimeler bu listede toplanır.</div>`;
+  return `<div class="sect">
+    <input class="search" id="q" placeholder="Kelime veya Türkçe anlam ara…" value="${esc(query)}">
+    <div class="entries">${list.map(entry).join("")||`<div class="empty">Eşleşen kelime yok.</div>`}</div></div>`;
+}
+function entry(w){
+  const st=prog[w.w];
+  return `<article class="entry ${st==="known"?"known":st==="hard"?"hard":""}">
+    <div class="hd">
+      <div><div class="word">${esc(w.w)}<span class="pos">${esc(w.pos)}</span></div>
+      <div class="ipa">${esc(w.ipa)}</div></div>
+      <div class="marks">
+        <button class="mark ${st==="known"?"on-ok":""}" data-m="known" data-w="${esc(w.w)}">✓ Biliyorum</button>
+        <button class="mark ${st==="hard"?"on-hard":""}" data-m="hard" data-w="${esc(w.w)}">★ Zor</button>
+      </div>
+    </div>
+    <p class="tr">${w.tr.map(esc).join(" · ")}</p>
+    <div class="rowlbl">Eş anlamlılar</div>
+    <div class="pills">${w.syn.map(s=>`<span class="pill">${esc(s)}</span>`).join("")}
+      ${w.ant.map(s=>`<span class="pill anti">≠ ${esc(s)}</span>`).join("")}</div>
+    <div class="rowlbl">Örnek cümleler</div>
+    ${w.ex.map(e=>`<div class="ex"><div class="en">${bold(e.en)}</div><div class="trn">${esc(e.tr)}</div></div>`).join("")}
+    <div class="rowlbl">Kelime ailesi</div>
+    <div class="fam">${w.fam.map(f=>`<i>${esc(f.split(" ")[0])}</i> ${esc(f.slice(f.indexOf(" ")+1))}`).join(" · ")}</div>
+    <div class="tip"><span>İpucu</span>${esc(w.tip)}</div>
+  </article>`;
+}
+
+/* ——— kartlar ——— */
+let deck=[], ci=0, flipped=false, dir="en";
+function viewKart(){
+  const ws=scope();
+  if(!ws.length) return `<div class="empty">Kart yok. Önce bir gün seç ya da kelime işaretle.</div>`;
+  if(!deck.length||deck.some(w=>!ws.includes(w))||deck.length!==ws.length){deck=shuffle(ws);ci=0;flipped=false}
+  const w=deck[ci];
+  const front=dir==="en"?esc(w.w):esc(w.tr[0]);
+  const fsub=dir==="en"?esc(w.ipa):"Türkçe → İngilizce";
+  const back=dir==="en"?esc(w.tr.join(" · ")):esc(w.w);
+  const st=prog[w.w];
+  return `<div class="sect">
+    <div class="cardbar">
+      <button class="btn" id="dir">${dir==="en"?"EN → TR":"TR → EN"}</button>
+      <button class="btn" id="sh">Karıştır</button>
+      <span class="counter">${ci+1} / ${deck.length}</span>
+    </div>
+    <div class="flip ${flipped?"open":""}" id="flip">
+      <div class="flip-in">
+        <div class="face"><div class="hintline">Çevirmek için dokun</div><div class="big">${front}</div><div class="sub">${fsub}</div></div>
+        <div class="face back">
+          <div class="big">${back}</div>
+          <div class="sub">${esc(plain(w.ex[0].en))}</div>
+          <div class="sub" style="color:var(--accent)">${esc(w.syn.slice(0,3).join(", "))}</div>
+        </div>
+      </div>
+    </div>
+    <div class="cardbar">
+      <button class="btn" id="prev" ${ci===0?"disabled":""}>← Önceki</button>
+      <button class="mark ${st==="known"?"on-ok":""}" data-m="known" data-w="${esc(w.w)}" style="padding:7px 13px">✓ Biliyorum</button>
+      <button class="mark ${st==="hard"?"on-hard":""}" data-m="hard" data-w="${esc(w.w)}" style="padding:7px 13px">★ Zor</button>
+      <button class="btn primary" id="next" style="margin-left:auto">${ci===deck.length-1?"Başa dön":"Sonraki →"}</button>
+    </div></div>`;
+}
+
+/* ——— test ——— */
+let quiz=null;
+function sameEnding(a,b){const e=s=>/(ed|ing|s)$/.exec(s.toLowerCase())?.[1]||"";return e(a)===e(b)}
+function qMeaning(w,pool){
+  const d=pick(pool.filter(x=>x!==w),3).map(x=>x.tr[0]);
+  return {kind:"Anlam",text:`<em>${esc(w.w)}</em> kelimesinin anlamı nedir?`,opts:shuffle([w.tr[0],...d]),ans:w.tr[0],w};
+}
+function qReverse(w,pool){
+  const d=pick(pool.filter(x=>x!==w),3).map(x=>x.w);
+  return {kind:"Türkçe → İngilizce",text:`“${esc(w.tr[0])}” karşılığı hangisidir?`,opts:shuffle([w.w,...d]),ans:w.w,w};
+}
+function qSyn(w,pool){
+  const right=pick(w.syn,1)[0];
+  const others=pool.filter(x=>x!==w).flatMap(x=>x.syn).filter(s=>!w.syn.includes(s));
+  return {kind:"Eş anlamlı",text:`<em>${esc(w.w)}</em> ile anlamca en yakın kelime hangisidir?`,opts:shuffle([right,...pick([...new Set(others)],3)]),ans:right,w};
+}
+function qCloze(w,pool){
+  const ex=pick(w.ex,1)[0], form=target(ex.en);
+  const cands=pool.filter(x=>x!==w).flatMap(x=>x.ex.map(e=>target(e.en)));
+  const matched=[...new Set(cands.filter(c=>sameEnding(c,form)))];
+  const rest=[...new Set(cands.filter(c=>!matched.includes(c)))];
+  const d=[...pick(matched,3),...pick(rest,3)].slice(0,3);
+  return {kind:"Boşluk doldurma",text:esc(ex.en).replace(/\{\{.+?\}\}/,'<span class="blank">______</span>'),
+          opts:shuffle([form,...d]),ans:form,w,ctx:ex.tr};
+}
+function buildQuiz(n){
+  const ws=scope(); if(ws.length<2) return null;
+  const pool=ALL.length>=5?ALL:ws;
+  let qs=[];
+  ws.forEach(w=>{
+    qs.push(qMeaning(w,pool));
+    qs.push(Math.random()<.5?qSyn(w,pool):qCloze(w,pool));
+    if(Math.random()<.4) qs.push(qReverse(w,pool));
+  });
+  return {qs:shuffle(qs).slice(0,n),i:0,score:0,wrong:[],picked:null};
+}
+function viewTest(){
+  const ws=scope();
+  if(ws.length<2) return `<div class="empty">Test için en az 2 kelime gerekiyor.</div>`;
+  if(!quiz) return `<div class="sect"><p class="lead">${ws.length} kelimeden soru üretilir: anlam, eş anlamlı, boşluk doldurma ve Türkçe→İngilizce karışık gelir.</p>
+    <div class="cardbar"><button class="btn primary" data-start="10">10 soruluk test</button>
+    <button class="btn" data-start="20">20 soruluk test</button>
+    <button class="btn" data-start="999">Tümü</button></div></div>`;
+  if(quiz.i>=quiz.qs.length){
+    const pct=Math.round(quiz.score/quiz.qs.length*100);
+    return `<div class="sect"><div class="scoreboard">
+      <div class="n">${quiz.score}/${quiz.qs.length}</div>
+      <p class="lead" style="margin:8px 0 0">%${pct} doğru</p>
+      ${quiz.wrong.length?`<div class="wronglist">${[...new Set(quiz.wrong.map(x=>x.w))].map(w=>{
+        const o=ALL.find(x=>x.w===w);return `<div class="wrongrow"><b>${esc(w)}</b><span>${esc(o.tr[0])}</span></div>`}).join("")}</div>
+      <div class="cardbar" style="margin-top:16px;justify-content:center"><button class="btn" id="markwrong">Yanlışları “zor” işaretle</button>
+      <button class="btn primary" id="again">Yeniden</button></div>`:
+      `<p class="lead" style="margin-top:10px">Hepsi doğru.</p><div class="cardbar" style="justify-content:center;margin-top:14px"><button class="btn primary" id="again">Yeniden</button></div>`}
+    </div></div>`;
+  }
+  const q=quiz.qs[quiz.i], p=quiz.picked;
+  return `<div class="sect">
+    <div class="cardbar"><span class="counter">Soru ${quiz.i+1} / ${quiz.qs.length}</span>
+      <span class="counter" style="margin-left:auto">Doğru: ${quiz.score}</span></div>
+    <div class="qcard">
+      <div class="qkind">${q.kind}</div>
+      <div class="qtext">${q.text}</div>
+      <div class="opts">${q.opts.map((o,k)=>{
+        let cls="";
+        if(p!==null){ if(o===q.ans)cls=" right"; else if(o===p)cls=" wrong"; }
+        return `<button class="opt${cls}" data-opt="${esc(o)}" ${p!==null?"disabled":""}><span class="k">${"ABCD"[k]}</span><span>${esc(o)}</span></button>`}).join("")}</div>
+      ${p!==null?`<div class="verdict">
+        <div class="vhd ${p===q.ans?"r":"w"}">${p===q.ans?"Doğru":"Yanlış — doğrusu: "+esc(q.ans)}</div>
+        <div><b>${esc(q.w.w)}</b> — ${esc(q.w.tr.join(" · "))}</div>
+        <div class="ctx">${bold(q.w.ex[0].en)}<br>${esc(q.w.ex[0].tr)}</div>
+        <div class="cardbar" style="margin:14px 0 0"><button class="btn primary" id="nextq">${quiz.i===quiz.qs.length-1?"Sonucu gör":"Sonraki soru"}</button></div>
+      </div>`:""}
+    </div></div>`;
+}
+
+/* ——— render + olaylar ——— */
+function render(){
+  chrome();
+  const v=document.getElementById("view");
+  v.innerHTML= mode==="kart"?viewKart() : mode==="test"?viewTest() : viewOgren();
+  const q=document.getElementById("q");
+  if(q){q.addEventListener("input",e=>{query=e.target.value.toLowerCase();
+    const list=scope().filter(w=>!query||w.w.includes(query)||w.tr.join(" ").toLowerCase().includes(query));
+    document.querySelector(".entries").innerHTML=list.map(entry).join("")||`<div class="empty">Eşleşen kelime yok.</div>`;});}
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest("button, .flip");
+  if(!t) return;
+  if(t.dataset.day){dayId=+t.dataset.day;deck=[];quiz=null;query="";render();return}
+  if(t.dataset.mode){mode=t.dataset.mode;deck=[];quiz=null;query="";render();return}
+  if(t.dataset.m){const w=t.dataset.w;prog[w]=prog[w]===t.dataset.m?undefined:t.dataset.m;if(!prog[w])delete prog[w];save();render();return}
+  if(t.id==="flip"){flipped=!flipped;document.getElementById("flip").classList.toggle("open",flipped);return}
+  if(t.id==="next"){ci=(ci+1)%deck.length;flipped=false;render();return}
+  if(t.id==="prev"){ci=Math.max(0,ci-1);flipped=false;render();return}
+  if(t.id==="sh"){deck=shuffle(deck);ci=0;flipped=false;render();return}
+  if(t.id==="dir"){dir=dir==="en"?"tr":"en";flipped=false;render();return}
+  if(t.dataset.start){quiz=buildQuiz(+t.dataset.start);render();return}
+  if(t.dataset.opt!==undefined&&quiz&&quiz.picked===null){
+    const q=quiz.qs[quiz.i];quiz.picked=t.dataset.opt;
+    if(quiz.picked===q.ans)quiz.score++;else quiz.wrong.push({w:q.w.w});
+    render();return}
+  if(t.id==="nextq"){quiz.i++;quiz.picked=null;render();return}
+  if(t.id==="again"){quiz=null;render();return}
+  if(t.id==="markwrong"){[...new Set(quiz.wrong.map(x=>x.w))].forEach(w=>prog[w]="hard");save();quiz=null;render();return}
+});
+document.addEventListener("keydown",e=>{
+  if(mode!=="kart")return;
+  if(e.key===" "){e.preventDefault();flipped=!flipped;document.getElementById("flip")?.classList.toggle("open",flipped)}
+  if(e.key==="ArrowRight"){ci=(ci+1)%deck.length;flipped=false;render()}
+  if(e.key==="ArrowLeft"){ci=Math.max(0,ci-1);flipped=false;render()}
+});
+render();
+</script>
+
+</body></html>
